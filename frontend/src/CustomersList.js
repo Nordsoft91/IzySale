@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+import { ButtonGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import CustomersService from './CustomersService';
 
 const customersService = new CustomersService();
@@ -43,7 +45,7 @@ class CustomersList extends Component {
     render() {
         return (
             <div className="customers--list">
-                <table className="table">
+                <Table>
                     <thead key="thead">
                         <tr>
                             <th>#</th>
@@ -67,13 +69,15 @@ class CustomersList extends Component {
                                 <td>{c.address}</td>
                                 <td>{c.description}</td>
                                 <td>
-                                    <button onClick={(e) => this.handleDelete(e, c.pk)}> Delete</button>
-                                    <a href={"/customer/" + c.pk}> Update</a>
+                                <ButtonGroup aria-label="Basic example">
+                                    <Button variant="secondary" onClick={(e) => this.handleDelete(e, c.pk)}>Delete</Button>
+                                    <Button variant="secondary" href={"/customer/" + c.pk}>Update</Button>
+                                </ButtonGroup>
                                 </td>
                             </tr>)}
                     </tbody>
-                </table>
-                <button className="btn btn-primary" onClick={this.nextPage}>Next</button>
+                </Table>
+                <Button variant="primary" onClick={this.nextPage}>Next</Button>
             </div>
         );
     }

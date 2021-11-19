@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import CustomersService from './CustomersService';
 
 const customersService = new CustomersService();
@@ -32,7 +34,7 @@ class CustomerCreateUpdate extends Component {
                 "email": this.refs.email.value,
                 "phone": this.refs.phone.value,
                 "address": this.refs.address.value,
-                "description": this.refs.description.value
+                "description": this.refs.description.value,
             }
         ).then((result) => {
             alert("Customer created!");
@@ -73,36 +75,29 @@ class CustomerCreateUpdate extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                    <label>
-                        First Name:</label>
-                    <input className="form-control" type="text" ref='firstName' />
+            <Form onSubmit={this.handleSubmit}>
+                <Form.Group className="mb-3">
+                    <Form.Label>First name</Form.Label>
+                    <Form.Control type="text" ref="firstName" />
 
-                    <label>
-                        Last Name:</label>
-                    <input className="form-control" type="text" ref='lastName' />
+                    <Form.Label>Last name</Form.Label>
+                    <Form.Control type="text" ref="lastName" />
 
-                    <label>
-                        Phone:</label>
-                    <input className="form-control" type="text" ref='phone' />
+                    <Form.Label>Phone</Form.Label>
+                    <Form.Control type="text" ref="phone" placeholder="+79999999" />
 
-                    <label>
-                        Email:</label>
-                    <input className="form-control" type="text" ref='email' />
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" ref="email" placeholder="name@example.com" />
 
-                    <label>
-                        Address:</label>
-                    <input className="form-control" type="text" ref='address' />
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control type="text" ref="address" />
 
-                    <label>
-                        Description:</label>
-                    <textarea className="form-control" ref='description' ></textarea>
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control type="text" ref="description" />
+                </Form.Group>
 
-
-                    <input className="btn btn-primary" type="submit" value="Submit" />
-                </div>
-            </form>
+                <Button variant="primary" type="submit">Submit</Button>{' '}
+            </Form>
         );
     }
 }
