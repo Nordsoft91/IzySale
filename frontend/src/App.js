@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import { Routes } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 import CustomersList from './CustomersList';
 import CustomerCreateUpdate from './CustomerCreateUpdate';
@@ -11,7 +12,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const BaseLayout = () => (
-  <div className="container-fluid">
+  <Container fluid>
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="/">Django React Demo</Navbar.Brand>
       <Nav.Link href="/">CUSTOMERS</Nav.Link>
@@ -23,8 +24,7 @@ const BaseLayout = () => (
       <Route path="/customer/:pk" element={<CustomerCreateUpdate />} />
       <Route path="/customer/" exact element={<CustomerCreateUpdate />} />
     </Routes>
-
-  </div>
+  </Container>
 )
 
 class App extends Component {

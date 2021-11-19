@@ -42,6 +42,7 @@ class CustomerCreateUpdate extends Component {
             alert('There was an error! Please re-check your form.');
         });
     }
+    
     handleUpdate(pk) {
         customersService.updateCustomer(
             {
@@ -60,6 +61,7 @@ class CustomerCreateUpdate extends Component {
             alert('There was an error! Please re-check your form.');
         });
     }
+
     handleSubmit(event) {
         const params = this.props;
 
