@@ -1,36 +1,40 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Route } from 'react-router-dom';
-import { Routes } from 'react-router-dom';
-import { Navbar } from 'react-bootstrap';
-import { Nav } from 'react-bootstrap';
-import { Container } from 'react-bootstrap';
+import { Container, Nav, Row } from 'react-bootstrap';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
-import CustomersList from './CustomersList';
-import CustomerCreateUpdate from './CustomerCreateUpdate';
+import ItemList from './ItemList';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const Header = () => (
+        <Nav variant="pills" defaultActiveKey="/">
+          <Nav.Item>
+            <Nav.Link href="/">Items</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link-1">Sell</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link-2">Storage</Nav.Link>
+          </Nav.Item>
+        </Nav>
+);
+
 const BaseLayout = () => (
   <Container fluid>
-    <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/">Django React Demo</Navbar.Brand>
-      <Nav.Link href="/">CUSTOMERS</Nav.Link>
-      <Nav.Link href="/customer">CREATE CUSTOMER</Nav.Link>
-    </Navbar>
-
-    <Routes>
-      <Route path="/" exact element={<CustomersList />} />
-      <Route path="/customer/:pk" element={<CustomerCreateUpdate />} />
-      <Route path="/customer/" exact element={<CustomerCreateUpdate />} />
-    </Routes>
+      <Routes>
+        <Route path="/" exact element={<ItemList />} />
+      </Routes>
   </Container>
-)
+);
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
+        <header>
+          <Header />
+        </header>
         <BaseLayout />
       </BrowserRouter>
     );
