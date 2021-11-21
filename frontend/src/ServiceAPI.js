@@ -22,11 +22,11 @@ export default class ServiceAPI{
 
     addToCart(itempk) {
         const url = `${API_URL}/api/cart/admin/${itempk}`;
-        return axios.put(url,itempk);
+        return axios.put(url,'admin',itempk);
     } 
 
     removeFromCart(itempk) {
         const url = `${API_URL}/api/cart/admin/${itempk}`;
-        return axios.delete(url,itempk);
+        return axios.delete(url,'admin',itempk);
     } 
 }

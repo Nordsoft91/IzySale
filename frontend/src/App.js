@@ -3,7 +3,6 @@ import { Col, Container, Nav, Row } from 'react-bootstrap';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 import ItemList from './ItemList';
-import Cart from './Cart';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,7 +12,7 @@ const Header = () => (
             <Nav.Link href="/">Items</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link-1">Sell</Nav.Link>
+            <Nav.Link href="/sell" eventKey="link-1">Sell</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="link-2">Storage</Nav.Link>
@@ -23,18 +22,9 @@ const Header = () => (
 
 const BaseLayout = () => (
   <Container fluid>
-      <Row>
-        <Col>
-          <Routes>
-            <Route path="/" exact element={<ItemList />} />
-          </Routes>
-        </Col>
-        <Col>
-          <Routes>
-            <Route path="/" exact element={<Cart />} />
-          </Routes>
-        </Col>
-      </Row>
+    <Routes>
+      <Route path="/" element={<ItemList />} />
+    </Routes>
   </Container>
 );
 
