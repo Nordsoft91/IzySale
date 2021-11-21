@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Col, Container, Nav, Row } from 'react-bootstrap';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
-import ItemList from './ItemList';
+import SalePage from './SalePage';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -23,7 +23,7 @@ const Header = () => (
 const BaseLayout = () => (
   <Container fluid>
     <Routes>
-      <Route path="/" element={<ItemList />} />
+      <Route path="/" element={<SalePage />} />
     </Routes>
   </Container>
 );

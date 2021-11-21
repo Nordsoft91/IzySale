@@ -5,7 +5,7 @@ import { API_URL } from './ServiceAPI';
 
 const service = new ServiceAPI();
 
-class ItemList extends Component {
+class SalePage extends Component {
 
     constructor(props) {
         super(props);
@@ -118,4 +118,4 @@ class ItemList extends Component {
         );
     }
 }
-export default ItemList;
+export default SalePage;
