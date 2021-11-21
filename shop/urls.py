@@ -5,6 +5,7 @@ from .views import *
 
 urlpatterns = [
     path('api/items/', item_list),
+    path('api/items/<int:barcode>', item_barcode),
     path('api/cart/<str:user>', cart_list),
     path('api/cart/<str:user>/<int:pk>', cart_modify),
     #url(r'^api/items/$', item_list),

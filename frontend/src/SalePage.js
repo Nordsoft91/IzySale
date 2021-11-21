@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Card, ListGroup, ListGroupItem, Table, Container, Nav } from 'react-bootstrap';
+import { Button, Row, Col, Card, ListGroup, ListGroupItem, Table, Container, Nav, Form } from 'react-bootstrap';
 import ServiceAPI from './ServiceAPI';
 import { API_URL } from './ServiceAPI';
 
@@ -54,6 +54,11 @@ class SalePage extends Component {
                 self.setState({ cartItems: result.data })
             })
         });
+    }
+
+    handleBarcode(e) {
+        var self = this;
+        
     }
 
     render() {
@@ -117,9 +122,7 @@ class SalePage extends Component {
                                                 <td>{c.price}</td>
                                                 <td>{c.qty}</td>
                                                 <td>{c.price * c.qty}</td>
-                                                <td>
-                                                    <Button variant="secondary" onClick={(e) => this.handleDelete(e, c.pk)}>Delete</Button>
-                                                </td>
+                                                <td><Button variant="secondary" onClick={(e) => this.handleDelete(e, c.pk)}>Delete</Button></td>
                                             </tr>)}
                                         <tr>
                                             <th>#</th>
@@ -134,6 +137,16 @@ class SalePage extends Component {
                                     </tbody>
                                 </Table>
                             </Nav.Item>
+                            <Form>
+                                <Row>
+                                    <Col>
+                                        <Form.Control placeholder="Barcode" />
+                                    </Col>
+                                    <Col>
+                                        <Button variant="primary" onClick={(e) => this.handleBarcode(e)} type="submit">Submit</Button>
+                                    </Col>
+                                </Row>
+                            </Form>
                         </Nav>
                     </Col>
 

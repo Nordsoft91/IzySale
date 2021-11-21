@@ -10,6 +10,7 @@ export default class ServiceAPI{
         const url = `${API_URL}/api/items/`;
         return axios.get(url).then(response => response.data);
     }
+
     getItemsByURL(link) {
         const url = `${API_URL}${link}`;
         return axios.get(url).then(response => response.data);
@@ -29,4 +30,9 @@ export default class ServiceAPI{
         const url = `${API_URL}/api/cart/admin/${itempk}`;
         return axios.delete(url,'admin',itempk);
     } 
+
+    searchByBarcode(barcode) {
+        const url = `${API_URL}/api/items/${barcode}`;
+        return axios.get(url).then(response => response.data);
+    }
 }

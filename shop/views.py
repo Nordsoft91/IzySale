@@ -41,6 +41,20 @@ def item_list(request):
 
 
 @api_view(['GET'])
+def item_barcode(request, barcode):
+    try:
+        item = Item.objects.get(barcode=barcode)
+    except Item.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = ItemSerializer(item,context={'request': request})
+        return Response({
+            'data': serializer.data
+            })
+
+
+@api_view(['GET'])
 def cart_list(request, user):
     try:
         owner = User.objects.get(username=user)
@@ -54,6 +68,7 @@ def cart_list(request, user):
         return Response({
             'data': serializer.data
             })
+
 
 @api_view(['PUT', 'DELETE'])
 def cart_modify(request, user, pk):
