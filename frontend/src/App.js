@@ -7,17 +7,17 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Header = () => (
-        <Nav variant="pills" defaultActiveKey="/">
-          <Nav.Item>
-            <Nav.Link href="/">Items</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/sell" eventKey="link-1">Sell</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="link-2">Storage</Nav.Link>
-          </Nav.Item>
-        </Nav>
+  <Nav variant="pills" defaultActiveKey="/">
+    <Nav.Item>
+      <Nav.Link href="/">Items</Nav.Link>
+    </Nav.Item>
+    <Nav.Item>
+      <Nav.Link href="/sell" eventKey="link-1">Sell</Nav.Link>
+    </Nav.Item>
+    <Nav.Item>
+      <Nav.Link eventKey="link-2">Storage</Nav.Link>
+    </Nav.Item>
+  </Nav>
 );
 
 const BaseLayout = () => (
@@ -32,10 +32,16 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <header>
-          <Header />
-        </header>
-        <BaseLayout />
+        <Container fluid>
+          <Row>
+            <header>
+              <Header />
+            </header>
+          </Row>
+          <Row>
+            <BaseLayout />
+          </Row>
+        </Container>
       </BrowserRouter>
     );
   }
