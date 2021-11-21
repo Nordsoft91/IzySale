@@ -57,6 +57,11 @@ class SalePage extends Component {
     }
 
     render() {
+        var qtyTotal = 0
+        var priceTotal = 0
+        this.state.cartItems.forEach(c => qtyTotal += c.qty)
+        this.state.cartItems.forEach(c => priceTotal += c.price * c.qty)
+
         return (
             <div className="item--list">
                 <Row>
@@ -116,6 +121,16 @@ class SalePage extends Component {
                                                     <Button variant="secondary" onClick={(e) => this.handleDelete(e, c.pk)}>Delete</Button>
                                                 </td>
                                             </tr>)}
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>{qtyTotal}</th>
+                                            <th>{priceTotal}</th>
+                                            <th><Button variant="primary">Process</Button></th>
+                                        </tr>
                                     </tbody>
                                 </Table>
                             </Nav.Item>
