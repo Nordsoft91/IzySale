@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, Product
+from .models import *
 
 class ProductSerializer(serializers.ModelSerializer):
 
@@ -9,7 +9,6 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class ItemSerializer(serializers.ModelSerializer):
     
-    #product_name = serializers.RelatedField(source='product', read_only=True)
     name = serializers.ReadOnlyField(source='product.name')
     category_name = serializers.ReadOnlyField(source='product.category.name')
     color = serializers.ReadOnlyField(source='color.name')
@@ -18,7 +17,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = ('pk', 'barcode', 'price', 'qty', 'name', 'category_name', 'color', 'size', 'image')
+        fields = ('pk', 'barcode', 'price', 'name', 'category_name', 'color', 'size', 'image')
 
     def get_image(self, item):
         request = self.context.get('request')
@@ -27,3 +26,20 @@ class ItemSerializer(serializers.ModelSerializer):
         except ValueError:
             image_url = '/media/thumbnail.svg'
         return image_url
+
+class StorageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Storage
+        fields = ('name', 'owner', 'items')
+
+class StorageItemSerializer(serializers.ModelSerializer):
+
+    name = serializers.ReadOnlyField(source='item.product.name')
+    category_name = serializers.ReadOnlyField(source='item.product.category.name')
+    color = serializers.ReadOnlyField(source='item.color.name')
+    size = serializers.ReadOnlyField(source='item.size.name')
+    price = serializers.ReadOnlyField(source='item.price')
+    barcode = serializers.ReadOnlyField(source='item.barcode')
+    class Meta:
+        model = StorageItem
+        fields = ('pk', 'item', 'qty', 'barcode', 'price', 'name', 'category_name', 'color', 'size')

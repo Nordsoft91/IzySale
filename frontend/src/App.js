@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Container, Nav, Row } from 'react-bootstrap';
+import { Col, Container, Nav, Row } from 'react-bootstrap';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 import ItemList from './ItemList';
+import Cart from './Cart';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -22,9 +23,18 @@ const Header = () => (
 
 const BaseLayout = () => (
   <Container fluid>
-      <Routes>
-        <Route path="/" exact element={<ItemList />} />
-      </Routes>
+      <Row>
+        <Col>
+          <Routes>
+            <Route path="/" exact element={<ItemList />} />
+          </Routes>
+        </Col>
+        <Col>
+          <Routes>
+            <Route path="/" exact element={<Cart />} />
+          </Routes>
+        </Col>
+      </Row>
   </Container>
 );
 

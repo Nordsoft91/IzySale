@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Card } from 'react-bootstrap';
+import { Button, Row, Col, Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import ServiceAPI from './ServiceAPI';
 import { API_URL } from './ServiceAPI';
 
@@ -28,10 +28,14 @@ class ItemList extends Component {
     nextPage(){
         var  self  =  this;
         service.getItemsByURL(this.state.nextPageURL).then((result) => {
-            self.setState({ items:  result.data, nextPageURL:  result.nextlink})
+            self.setState({ items: result.data, nextPageURL: result.nextlink})
         });
     }
 
+
+    handleSell(e, pk){
+        service.addToCart(pk)
+    }
 
     render() {
         return (
@@ -42,12 +46,16 @@ class ItemList extends Component {
                         <Card style={{ height: '100%', width: '18rem' }}>
                             <Card.Img variant="top" src={API_URL+c.image} style={{ height: '225px' }}/>
                             <Card.Body>
-                            <Card.Title>{c.category_name} - {c.name}</Card.Title>
-                            <Card.Text>
-                                {c.pk} - {c.barcode} - {c.color} - {c.size} - {c.price} - {c.qty} - {c.price * c.qty}
-                            </Card.Text>
-                            <Button variant="primary">Sell</Button>
+                            <Card.Title>{c.category_name} {c.name}</Card.Title>
                             </Card.Body>
+                            <ListGroup className="list-group-flush">
+                                <ListGroupItem>Color {c.color}</ListGroupItem>
+                                <ListGroupItem>Size {c.size}</ListGroupItem>
+                                <ListGroupItem>
+                                    Price {c.price}
+                                    <Button variant="primary" onClick={(e) => this.handleSell(e, c.pk)}>Sell</Button>
+                                </ListGroupItem>
+                            </ListGroup>
                         </Card>
                     </Col>
                 )}

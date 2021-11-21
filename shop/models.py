@@ -51,7 +51,6 @@ class Item(models.Model):
     product = models.ForeignKey(Product, verbose_name='Продукт', on_delete=models.CASCADE)
     color = models.ForeignKey(Color, verbose_name='Цвет', on_delete=models.CASCADE, related_name='related_color', null=True)
     size = models.ForeignKey(Size, verbose_name='Размер', on_delete=models.CASCADE, related_name='related_size', null=True)
-    qty = models.PositiveIntegerField(default=1, verbose_name='Количество')
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Цена')
     barcode = models.PositiveBigIntegerField(default=1, verbose_name='Штрих код', unique=True)
 
@@ -59,20 +58,22 @@ class Item(models.Model):
         return f"{self.product.category.name} {self.product.name} {self.color.name} {self.size.name}"
 
 
+class StorageItem(models.Model):
+    
+    item = models.ForeignKey(Item, verbose_name='Экземпляр', on_delete=models.CASCADE)
+    qty = models.PositiveIntegerField(default=1, verbose_name='Количество')
+
+    def __str__(self) -> str:
+        return f"{self.item.product.category.name} {self.item.product.name} {self.item.color.name} {self.item.size.name} кол-во {self.qty}"
+
 class Storage(models.Model):
 
     name = models.CharField(max_length=255, verbose_name='Хранилище')
-    items = models.ManyToManyField(Item, blank=True)
+    items = models.ManyToManyField(StorageItem, blank=True)
+    owner = models.ForeignKey(User, verbose_name='Владелец', on_delete=models.CASCADE, null=True)
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name} for user {self.owner.username}"
 
 
-class Specifications(models.Model):
-
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    name = models.CharField(max_length=255, verbose_name='Имя продукта')
-
-    def __str__(self) -> str:
-        return f"Характеристики продукта {self.name}"
+    

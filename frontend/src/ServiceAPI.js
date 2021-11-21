@@ -14,4 +14,19 @@ export default class ServiceAPI{
         const url = `${API_URL}${link}`;
         return axios.get(url).then(response => response.data);
     }
+
+    getCartList() {
+        const url = `${API_URL}/api/cart/admin`;
+        return axios.get(url).then(response => response.data);
+    }
+
+    addToCart(itempk) {
+        const url = `${API_URL}/api/cart/admin/${itempk}`;
+        return axios.put(url,itempk);
+    } 
+
+    removeFromCart(itempk) {
+        const url = `${API_URL}/api/cart/admin/${itempk}`;
+        return axios.delete(url,itempk);
+    } 
 }

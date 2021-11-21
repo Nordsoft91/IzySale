@@ -45,7 +45,7 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(Category)
 admin.site.register(Product)
 admin.site.register(Item, ItemAdmin)
+admin.site.register(StorageItem)
 admin.site.register(Storage)
-admin.site.register(Specifications)
 admin.site.register(Color)
 admin.site.register(Size)
