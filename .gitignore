@@ -4,3 +4,5 @@ db.sqlite3
 frontend/node_modules/
 media/*
 !media/thumbnail.svg
+.env
+NOTES.txt
