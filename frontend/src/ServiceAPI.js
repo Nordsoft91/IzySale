@@ -7,7 +7,7 @@ export default class ServiceAPI{
     constructor(){}
 
     getItems() {
-        const url = `${API_URL}/api/items/`;
+        const url = `${API_URL}/api/shop/items/`;
         return axios.get(url).then(
             response => response.data);
     }
@@ -18,22 +18,22 @@ export default class ServiceAPI{
     }
 
     getCartList() {
-        const url = `${API_URL}/api/cart/admin`;
+        const url = `${API_URL}/api/shop/cart/admin`;
         return axios.get(url).then(response => response.data);
     }
 
     addToCart(itempk) {
-        const url = `${API_URL}/api/cart/admin/${itempk}`;
+        const url = `${API_URL}/api/shop/cart/admin/${itempk}`;
         return axios.put(url,'admin',itempk);
     } 
 
     removeFromCart(itempk) {
-        const url = `${API_URL}/api/cart/admin/${itempk}`;
+        const url = `${API_URL}/api/shop/cart/admin/${itempk}`;
         return axios.delete(url,'admin',itempk);
     } 
 
     searchByBarcode(barcode) {
-        const url = `${API_URL}/api/items/${barcode}`;
+        const url = `${API_URL}/api/shop/items/${barcode}`;
         return axios.get(url).then(response => response.data);
     }
 }
