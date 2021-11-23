@@ -8,7 +8,8 @@ export default class ServiceAPI{
 
     getItems() {
         const url = `${API_URL}/api/items/`;
-        return axios.get(url).then(response => response.data);
+        return axios.get(url).then(
+            response => response.data);
     }
 
     getItemsByURL(link) {

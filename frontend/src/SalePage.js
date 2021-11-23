@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Card, ListGroup, ListGroupItem, Table, Container, Nav, Form } from 'react-bootstrap';
+import { Button, Row, Col, Card, ListGroup, ListGroupItem, Table, Container, Nav, Form, Alert } from 'react-bootstrap';
 import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 import ServiceAPI from './ServiceAPI';
 import { API_URL } from './ServiceAPI';
 
 const service = new ServiceAPI();
+
+function ErrorAlert({error}) {
+    if (error !== '')
+    {
+        return  (
+            <Alert variant="danger">
+                {error}
+            </Alert>
+        );
+    }
+    return null;
+}
 
 function BarcodeForm({ onSubmitBarcode }) {
     function handleSubmit(event) {
@@ -34,7 +46,8 @@ class SalePage extends Component {
         this.state = {
             items: [],
             nextPageURL: '',
-            cartItems: []
+            cartItems: [],
+            errorMsg: ''
         };
         this.componentDidMount = this.componentDidMount.bind(this);
         this.nextPage = this.nextPage.bind(this);
@@ -46,8 +59,13 @@ class SalePage extends Component {
 
     componentDidMount() {
         var self = this;
-        service.getItems().then(function (result) {
+        service.getItems()
+        .then(function (result) {
             self.setState({ items: result.data, nextPageURL: result.nextlink })
+        })
+        .catch(function(error) {
+            self.setState({ errorMsg: error.message });
+            return;
         });
         service.getCartList().then(function (result) {
             self.setState({ cartItems: result.data })
@@ -105,8 +123,8 @@ class SalePage extends Component {
         return (
             <div className="item--list">
                 <Row>
-
                     <Col>
+                        <ErrorAlert error={this.state.errorMsg}/>
                         <Row>
                             {this.state.items.map(c =>
                                 <Col>
@@ -133,6 +151,8 @@ class SalePage extends Component {
 
                     <Col>
                         <Nav className="sticky-top">
+                            <Container>
+                                <Row>
                             <Nav.Item>
                                 <Table>
                                     <thead key="thead">
@@ -172,7 +192,11 @@ class SalePage extends Component {
                                     </tbody>
                                 </Table>
                             </Nav.Item>
+                            </Row>
+                            <Row>
                             <BarcodeForm onSubmitBarcode={this.handleBarcode}/>
+                            </Row>
+                            </Container>
                         </Nav>
                     </Col>
 
