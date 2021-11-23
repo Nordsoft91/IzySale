@@ -3,6 +3,8 @@ import { Col, Container, Nav, Row } from 'react-bootstrap';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 import SalePage from './SalePage';
+import Login from './login';
+import Signup from './signup';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,7 +14,7 @@ const Header = () => (
       <Nav.Link href="/">Items</Nav.Link>
     </Nav.Item>
     <Nav.Item>
-      <Nav.Link href="/sell" eventKey="link-1">Sell</Nav.Link>
+      <Nav.Link href="/login" eventKey="link-1">Sell</Nav.Link>
     </Nav.Item>
     <Nav.Item>
       <Nav.Link eventKey="link-2">Storage</Nav.Link>
@@ -23,7 +25,9 @@ const Header = () => (
 const BaseLayout = () => (
   <Container fluid>
     <Routes>
-      <Route path="/" element={<SalePage />} />
+      <Route exact path="/" element={<SalePage />} />
+      <Route exact path="/login" element={<Login />}/>
+      <Route exact path="/signup" element={<Signup />}/>
     </Routes>
   </Container>
 );
