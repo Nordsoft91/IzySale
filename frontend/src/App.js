@@ -14,10 +14,10 @@ const Header = () => (
       <Nav.Link href="/">Items</Nav.Link>
     </Nav.Item>
     <Nav.Item>
-      <Nav.Link href="/login" eventKey="link-1">Sell</Nav.Link>
+      <Nav.Link href="/login" eventKey="link-1">Login</Nav.Link>
     </Nav.Item>
     <Nav.Item>
-      <Nav.Link eventKey="link-2">Storage</Nav.Link>
+      <Nav.Link href="/signup" eventKey="link-2">Sign up</Nav.Link>
     </Nav.Item>
   </Nav>
 );
