@@ -1,7 +1,6 @@
 import axios from 'axios';
 import axiosInstance from "./axiosAPI";
-
-export const API_URL = 'http://localhost:8000';
+import { API_URL } from './axiosAPI';
 
 export default class ServiceAPI{
 
@@ -19,18 +18,18 @@ export default class ServiceAPI{
     }
 
     getCartList() {
-        const url = `${API_URL}/api/shop/cart/admin`;
+        const url = `${API_URL}/api/shop/cart`;
         return axiosInstance.get(url).then(response => response.data);
     }
 
     addToCart(itempk) {
-        const url = `${API_URL}/api/shop/cart/admin/${itempk}`;
-        return axiosInstance.put(url,'admin',itempk);
+        const url = `${API_URL}/api/shop/cart/${itempk}`;
+        return axiosInstance.put(url,itempk);
     } 
 
     removeFromCart(itempk) {
-        const url = `${API_URL}/api/shop/cart/admin/${itempk}`;
-        return axiosInstance.delete(url,'admin',itempk);
+        const url = `${API_URL}/api/shop/cart/${itempk}`;
+        return axiosInstance.delete(url,itempk);
     } 
 
     searchByBarcode(barcode) {

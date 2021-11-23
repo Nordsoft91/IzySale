@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from rest_framework.authtoken.models import Token
+
 
 from .models import *
 from .serializers import *
@@ -55,9 +57,9 @@ def item_barcode(request, barcode):
 
 
 @api_view(['GET'])
-def cart_list(request, user):
+def cart_list(request):
     try:
-        owner = User.objects.get(username=user)
+        owner = User.objects.get(id=request.auth['user_id'])
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -71,10 +73,10 @@ def cart_list(request, user):
 
 
 @api_view(['PUT', 'DELETE'])
-def cart_modify(request, user, pk):
+def cart_modify(request, pk):
     #veryfy if user exists
     try:
-        owner = User.objects.get(username=user)
+        owner = User.objects.get(username='nordsoft')
     except User.DoesNotExist:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 

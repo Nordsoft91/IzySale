@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Row, Col, Card, ListGroup, ListGroupItem, Table, Container, Nav, Form, Alert } from 'react-bootstrap';
 import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 import ServiceAPI from './ServiceAPI';
-import { API_URL } from './ServiceAPI';
+import { API_URL } from './axiosAPI';
 
 const service = new ServiceAPI();
 
@@ -158,6 +158,7 @@ class SalePage extends Component {
                                     <thead key="thead">
                                         <tr>
                                             <th>#</th>
+                                            <th>Category</th>
                                             <th>Product</th>
                                             <th>Color</th>
                                             <th>Size</th>
@@ -171,6 +172,7 @@ class SalePage extends Component {
                                         {this.state.cartItems.map(c =>
                                             <tr key={c.pk}>
                                                 <td>{c.pk}</td>
+                                                <td>{c.category_name}</td>
                                                 <td>{c.name}</td>
                                                 <td>{c.color}</td>
                                                 <td>{c.size}</td>
@@ -182,6 +184,7 @@ class SalePage extends Component {
                                         <tr>
                                             <th>#</th>
                                             <th>Total</th>
+                                            <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
