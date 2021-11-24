@@ -24,7 +24,7 @@ const Header = () => (
       
       <Navbar.Collapse className="justify-content-end">
       <Navbar.Text>
-      <a href="/" onClick={logout()}>Log out</a>
+      <a href="/login" onClick={logout()}>Log out</a>
       </Navbar.Text>
     </Navbar.Collapse>
 

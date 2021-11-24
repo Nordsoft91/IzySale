@@ -114,17 +114,20 @@ class SalePage extends Component {
         });
     }
 
+
+
     render() {
         var qtyTotal = 0
         var priceTotal = 0
         this.state.cartItems.forEach(c => qtyTotal += c.qty)
         this.state.cartItems.forEach(c => priceTotal += c.price * c.qty)
 
+
         return (
             <div className="item--list">
                 <Row>
+                    <ErrorAlert error={this.state.errorMsg}/>
                     <Col>
-                        <ErrorAlert error={this.state.errorMsg}/>
                         <Row>
                             {this.state.items.map(c =>
                                 <Col>
