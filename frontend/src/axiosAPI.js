@@ -13,11 +13,24 @@ const axiosInstance = axios.create({
     }
 });
 
+export function logout() {
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (refreshToken){
+        localStorage.removeItem("refresh_token");
+    }
+    const accessToken = localStorage.getItem('access_token')
+    if (accessToken){
+        localStorage.removeItem("access_token");
+    }
+}
 
 axiosInstance.interceptors.response.use(
     response => response,
     error => {
         const originalRequest = error.config;
+        if (!error.response) {
+            return Promise.reject(error);
+        }
 
         // Prevent infinite loops
         if (error.response.status === 401 && originalRequest.url === axiosInstance.baseURL+'token/refresh/') {
