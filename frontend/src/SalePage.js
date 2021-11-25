@@ -13,6 +13,7 @@ class SalePage extends Component {
         this.state = {
             items: [],
             nextPageURL: '',
+            storageList: [],
             storageItems: [],
             errorMsg: ''
         };
@@ -33,6 +34,9 @@ class SalePage extends Component {
         .catch(function(error) {
             self.setState({ errorMsg: error.message });
             return;
+        });
+        service.getStorageList().then(function (result) {
+            self.setState({ storageList: result.data })
         });
         service.getStorageItems('Cart').then(function (result) {
             self.setState({ storageItems: result.data })
@@ -92,6 +96,12 @@ class SalePage extends Component {
                 <Row>
                     <Col>
                         <ErrorAlert error={this.state.errorMsg}/>
+                        <Row>
+                            <Form.Select aria-label="Default select example">
+                                <option>Open this select menu</option>
+                                {this.state.storageList.map(c =><option value={c.pk}>{c.name}</option>)}
+                            </Form.Select>
+                        </Row>
                         <Row>
                             {this.state.items.map(c =>
                                 <Col>

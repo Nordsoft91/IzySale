@@ -17,6 +17,11 @@ export default class ServiceAPI{
         return axiosInstance.get(url).then(response => response.data);
     }
 
+    getStorageList() {
+        const url = `${API_URL}/api/shop/storage/`;
+        return axiosInstance.get(url).then(response => response.data);
+    }
+
     getStorageItems(storageName) {
         const url = `${API_URL}/api/shop/storage/${storageName}`;
         return axiosInstance.get(url, storageName).then(response => response.data);

@@ -57,6 +57,22 @@ def item_barcode(request, barcode):
 
 
 @api_view(['GET'])
+def storage_list(request):
+    try:
+        owner = User.objects.get(id=request.auth['user_id'])
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        storages = Storage.objects.filter(owner=owner)
+        serializer = StorageSerializer(storages,context={'request': request} ,many=True)
+
+        return Response({
+            'data': serializer.data
+            })
+
+
+@api_view(['GET'])
 def storage_items(request, storageName):
     try:
         owner = User.objects.get(id=request.auth['user_id'])
