@@ -3,42 +3,9 @@ import { Button, Row, Col, Card, ListGroup, ListGroupItem, Table, Container, Nav
 import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 import ServiceAPI from './ServiceAPI';
 import { API_URL } from './axiosAPI';
+import { ErrorAlert, BarcodeForm } from './Common';
 
 const service = new ServiceAPI();
-
-function ErrorAlert({error}) {
-    if (error !== '')
-    {
-        return  (
-            <Alert variant="danger">
-                {error}
-            </Alert>
-        );
-    }
-    return null;
-}
-
-function BarcodeForm({ onSubmitBarcode }) {
-    function handleSubmit(event) {
-        event.preventDefault()
-        onSubmitBarcode(event.currentTarget.elements.barcodeInput.value)
-        event.currentTarget.elements.barcodeInput.value = ''
-    }
-
-    return (
-        <Form onSubmit={handleSubmit}>
-            <Row>
-                <Col>
-                    <Form.Control id="barcodeInput" placeholder="Barcode" />
-                </Col>
-                <Col>
-                    <Button type="submit">Submit</Button>
-                </Col>
-            </Row>
-        </Form>
-    )
-}
-
 class SalePage extends Component {
 
     constructor(props) {
@@ -46,7 +13,7 @@ class SalePage extends Component {
         this.state = {
             items: [],
             nextPageURL: '',
-            cartItems: [],
+            storageItems: [],
             errorMsg: ''
         };
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -67,8 +34,8 @@ class SalePage extends Component {
             self.setState({ errorMsg: error.message });
             return;
         });
-        service.getCartList().then(function (result) {
-            self.setState({ cartItems: result.data })
+        service.getStorageItems().then(function (result) {
+            self.setState({ storageItems: result.data })
         });
     }
 
@@ -83,9 +50,9 @@ class SalePage extends Component {
 
     handleSell(e, pk) {
         var self = this;
-        service.addToCart(pk).then(() => {
-            service.getCartList().then(function (result) {
-                self.setState({ cartItems: result.data })
+        service.addToStorage(pk).then(() => {
+            service.getStorageItems().then(function (result) {
+                self.setState({ storageItems: result.data })
             })
         });
     }
@@ -93,9 +60,9 @@ class SalePage extends Component {
 
     handleDelete(e, pk) {
         var self = this;
-        service.removeFromCart(pk).then(() => {
-            service.getCartList().then(function (result) {
-                self.setState({ cartItems: result.data })
+        service.removeFromStorage(pk).then(() => {
+            service.getStorageItems().then(function (result) {
+                self.setState({ storageItems: result.data })
             })
         });
     }
@@ -104,30 +71,27 @@ class SalePage extends Component {
         var self = this;
         service.searchByBarcode(code)
         .then(function(item) {
-            return service.addToCart(item.data.pk);
+            return service.addToStorage(item.data.pk);
         })
         .then(function() {
-            return service.getCartList();
+            return service.getStorageItems();
         })
         .then(function(result) {
-            self.setState({ cartItems: result.data });
+            self.setState({ storageItems: result.data });
         });
     }
-
-
 
     render() {
         var qtyTotal = 0
         var priceTotal = 0
-        this.state.cartItems.forEach(c => qtyTotal += c.qty)
-        this.state.cartItems.forEach(c => priceTotal += c.price * c.qty)
-
+        this.state.storageItems.forEach(c => qtyTotal += c.qty)
+        this.state.storageItems.forEach(c => priceTotal += c.price * c.qty)
 
         return (
             <div className="item--list">
                 <Row>
-                    <ErrorAlert error={this.state.errorMsg}/>
                     <Col>
+                        <ErrorAlert error={this.state.errorMsg}/>
                         <Row>
                             {this.state.items.map(c =>
                                 <Col>
@@ -161,7 +125,6 @@ class SalePage extends Component {
                                     <thead key="thead">
                                         <tr>
                                             <th>#</th>
-                                            <th>Category</th>
                                             <th>Product</th>
                                             <th>Color</th>
                                             <th>Size</th>
@@ -172,10 +135,9 @@ class SalePage extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.cartItems.map(c =>
+                                        {this.state.storageItems.map(c =>
                                             <tr key={c.pk}>
                                                 <td>{c.pk}</td>
-                                                <td>{c.category_name}</td>
                                                 <td>{c.name}</td>
                                                 <td>{c.color}</td>
                                                 <td>{c.size}</td>
@@ -187,7 +149,6 @@ class SalePage extends Component {
                                         <tr>
                                             <th>#</th>
                                             <th>Total</th>
-                                            <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>

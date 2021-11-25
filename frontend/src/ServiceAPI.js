@@ -17,18 +17,18 @@ export default class ServiceAPI{
         return axiosInstance.get(url).then(response => response.data);
     }
 
-    getCartList() {
-        const url = `${API_URL}/api/shop/cart`;
+    getStorageItems() {
+        const url = `${API_URL}/api/shop/storage`;
         return axiosInstance.get(url).then(response => response.data);
     }
 
-    addToCart(itempk) {
-        const url = `${API_URL}/api/shop/cart/${itempk}`;
+    addToStorage(itempk) {
+        const url = `${API_URL}/api/shop/storage/${itempk}`;
         return axiosInstance.put(url,itempk);
     } 
 
-    removeFromCart(itempk) {
-        const url = `${API_URL}/api/shop/cart/${itempk}`;
+    removeFromStorage(itempk) {
+        const url = `${API_URL}/api/shop/storage/${itempk}`;
         return axiosInstance.delete(url,itempk);
     } 
 

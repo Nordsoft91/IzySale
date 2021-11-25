@@ -57,7 +57,7 @@ def item_barcode(request, barcode):
 
 
 @api_view(['GET'])
-def cart_list(request):
+def storage_list(request):
     try:
         owner = User.objects.get(id=request.auth['user_id'])
     except User.DoesNotExist:
@@ -73,7 +73,7 @@ def cart_list(request):
 
 
 @api_view(['PUT', 'DELETE'])
-def cart_modify(request, pk):
+def storage_modify(request, pk):
     #veryfy if user exists
     try:
         owner = User.objects.get(id=request.auth['user_id'])
