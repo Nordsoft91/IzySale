@@ -14,6 +14,7 @@ class SalePage extends Component {
             items: [],
             nextPageURL: '',
             storageList: [],
+            storageName: '',
             storageItems: [],
             errorMsg: ''
         };
@@ -38,7 +39,7 @@ class SalePage extends Component {
         service.getStorageList().then(function (result) {
             self.setState({ storageList: result.data })
         });
-        service.getStorageItems('Cart').then(function (result) {
+        service.getStorageItems(this.state.storageName).then(function (result) {
             self.setState({ storageItems: result.data })
         });
     }
@@ -54,8 +55,8 @@ class SalePage extends Component {
 
     handleSell(e, pk) {
         var self = this;
-        service.addToStorage('Cart', pk).then(() => {
-            service.getStorageItems('Cart').then(function (result) {
+        service.addToStorage(this.state.storageName, pk).then(() => {
+            service.getStorageItems(this.state.storageName).then(function (result) {
                 self.setState({ storageItems: result.data })
             })
         });
@@ -64,8 +65,8 @@ class SalePage extends Component {
 
     handleDelete(e, pk) {
         var self = this;
-        service.removeFromStorage('Cart', pk).then(() => {
-            service.getStorageItems('Cart').then(function (result) {
+        service.removeFromStorage(this.state.storageName, pk).then(() => {
+            service.getStorageItems(this.state.storageName).then(function (result) {
                 self.setState({ storageItems: result.data })
             })
         });
@@ -75,15 +76,25 @@ class SalePage extends Component {
         var self = this;
         service.searchByBarcode(code)
         .then(function(item) {
-            return service.addToStorage('Cart', item.data.pk);
+            return service.addToStorage(this.state.storageName, item.data.pk);
         })
         .then(function() {
-            return service.getStorageItems('Cart');
+            return service.getStorageItems(this.state.storageName);
         })
         .then(function(result) {
             self.setState({ storageItems: result.data });
         });
     }
+
+    handleStorageList(e) {
+        var self = this;
+        //event.currentTarget.elements.barcodeInput.value
+        self.setState({ storageName: e.currentTarget.value });
+        service.getStorageItems(self.state.storageName).then(function(result) {
+            self.setState({ storageItems: result.data })
+        });
+    }
+
 
     render() {
         var qtyTotal = 0
@@ -97,8 +108,8 @@ class SalePage extends Component {
                     <Col>
                         <ErrorAlert error={this.state.errorMsg}/>
                         <Row>
-                            <Form.Select aria-label="Default select example">
-                                <option>Open this select menu</option>
+                            <Form.Select aria-label="Default select example" onChange={(e) => this.handleStorageList(e)}>
+                                <option>Select storage</option>
                                 {this.state.storageList.map(c =><option value={c.pk}>{c.name}</option>)}
                             </Form.Select>
                         </Row>
