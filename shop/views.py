@@ -76,7 +76,7 @@ def cart_list(request):
 def cart_modify(request, pk):
     #veryfy if user exists
     try:
-        owner = User.objects.get(username='nordsoft')
+        owner = User.objects.get(id=request.auth['user_id'])
     except User.DoesNotExist:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
