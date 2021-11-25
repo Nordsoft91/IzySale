@@ -57,14 +57,14 @@ def item_barcode(request, barcode):
 
 
 @api_view(['GET'])
-def storage_list(request):
+def storage_items(request, storageName):
     try:
         owner = User.objects.get(id=request.auth['user_id'])
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        storage = Storage.objects.get(name='Cart', owner=owner)
+        storage = Storage.objects.get(name=storageName, owner=owner)
         serializer = StorageItemSerializer(storage.items,context={'request': request} ,many=True)
 
         return Response({
@@ -73,7 +73,7 @@ def storage_list(request):
 
 
 @api_view(['PUT', 'DELETE'])
-def storage_modify(request, pk):
+def storage_modify(request, storageName, pk):
     #veryfy if user exists
     try:
         owner = User.objects.get(id=request.auth['user_id'])
@@ -82,16 +82,16 @@ def storage_modify(request, pk):
 
     #get or create new storage for cart
     try:
-        storage = Storage.objects.get(name='Cart', owner=owner)
+        storage = Storage.objects.get(name=storageName, owner=owner)
     except Storage.DoesNotExist:
         storageData = {
-            'name': 'Cart',
+            'name': storageName,
             'owner': owner.pk
         }
         serializer = StorageSerializer(data=storageData)
         if serializer.is_valid():
             serializer.save()
-            storage = Storage.objects.get(name='Cart', owner=owner)
+            storage = Storage.objects.get(name=storageName, owner=owner)
         else:
             return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
 

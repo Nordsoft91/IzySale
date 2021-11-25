@@ -17,19 +17,19 @@ export default class ServiceAPI{
         return axiosInstance.get(url).then(response => response.data);
     }
 
-    getStorageItems() {
-        const url = `${API_URL}/api/shop/storage`;
-        return axiosInstance.get(url).then(response => response.data);
+    getStorageItems(storageName) {
+        const url = `${API_URL}/api/shop/storage/${storageName}`;
+        return axiosInstance.get(url, storageName).then(response => response.data);
     }
 
-    addToStorage(itempk) {
-        const url = `${API_URL}/api/shop/storage/${itempk}`;
-        return axiosInstance.put(url,itempk);
+    addToStorage(storageName, itempk) {
+        const url = `${API_URL}/api/shop/storage/${storageName}/${itempk}`;
+        return axiosInstance.put(url, storageName, itempk);
     } 
 
-    removeFromStorage(itempk) {
-        const url = `${API_URL}/api/shop/storage/${itempk}`;
-        return axiosInstance.delete(url,itempk);
+    removeFromStorage(storageName, itempk) {
+        const url = `${API_URL}/api/shop/storage/${storageName}/${itempk}`;
+        return axiosInstance.delete(url, storageName, itempk);
     } 
 
     searchByBarcode(barcode) {

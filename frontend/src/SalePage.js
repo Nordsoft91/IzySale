@@ -34,7 +34,7 @@ class SalePage extends Component {
             self.setState({ errorMsg: error.message });
             return;
         });
-        service.getStorageItems().then(function (result) {
+        service.getStorageItems('Cart').then(function (result) {
             self.setState({ storageItems: result.data })
         });
     }
@@ -50,8 +50,8 @@ class SalePage extends Component {
 
     handleSell(e, pk) {
         var self = this;
-        service.addToStorage(pk).then(() => {
-            service.getStorageItems().then(function (result) {
+        service.addToStorage('Cart', pk).then(() => {
+            service.getStorageItems('Cart').then(function (result) {
                 self.setState({ storageItems: result.data })
             })
         });
@@ -60,8 +60,8 @@ class SalePage extends Component {
 
     handleDelete(e, pk) {
         var self = this;
-        service.removeFromStorage(pk).then(() => {
-            service.getStorageItems().then(function (result) {
+        service.removeFromStorage('Cart', pk).then(() => {
+            service.getStorageItems('Cart').then(function (result) {
                 self.setState({ storageItems: result.data })
             })
         });
@@ -71,10 +71,10 @@ class SalePage extends Component {
         var self = this;
         service.searchByBarcode(code)
         .then(function(item) {
-            return service.addToStorage(item.data.pk);
+            return service.addToStorage('Cart', item.data.pk);
         })
         .then(function() {
-            return service.getStorageItems();
+            return service.getStorageItems('Cart');
         })
         .then(function(result) {
             self.setState({ storageItems: result.data });
