@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, Col, Button, Row } from 'react-bootstrap';
-
+import axiosInstance from "./axiosAPI";
 class Signup extends Component {
 
     constructor(props) {
@@ -15,19 +15,37 @@ class Signup extends Component {
     }
 
     handleSubmit(event) {
-        alert('A username and password was submitted: ' + event.currentTarget.elements.formBasicUsername.value + " " + event.currentTarget.elements.formBasicPassword.value);
+        event.preventDefault();
+        axiosInstance.post('/user/create/', {
+            username: event.currentTarget.elements.fieldUsername.value,
+            email: event.currentTarget.elements.fieldEmail.value,
+            password: event.currentTarget.elements.fieldPassword.value
+        }).then(
+            result => {
+                alert('A username and password was submitted: ' + event.currentTarget.elements.formBasicUsername.value + " " + event.currentTarget.elements.formBasicPassword.value);
+                window.location.href = '/login'
+            }
+        ).catch(error => {
+            alert('error: ' + error);
+            throw error;
+        })
     }
 
     render() {
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Row className="mb-3">
-                    <Form.Group as={Col} controlId="formBasicUsername">
+                    <Form.Group as={Col} controlId="fieldUsername">
+                        <Form.Label>User name</Form.Label>
+                        <Form.Control type="text" placeholder="Username" />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="fieldEmail">
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" />
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="formBasicPassword">
+                    <Form.Group as={Col} controlId="fieldPassword">
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" />
                     </Form.Group>
